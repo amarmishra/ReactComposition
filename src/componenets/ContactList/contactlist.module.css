@@ -1,0 +1,19 @@
+.btn-delete{
+    color: red;
+}
+.btn-edit{
+    color:blue;
+}
+
+
+.contacts-container{
+    width:80%;
+}
+
+.contact-content-row{
+    width:10em;
+}
+.contact-content-col{
+   text-align: center;
+   margin: auto;
+}
