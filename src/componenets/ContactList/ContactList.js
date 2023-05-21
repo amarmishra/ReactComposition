@@ -7,17 +7,27 @@ import styles from './contactlist.module.css'
 const ContactList = () => {
     
 
+     //state for form edit
+     let intial=null //intial state of form
+     const [editContact,setEditContact]=useState(intial)
+
     function reducerFunc(contactList,action){
         switch(action.type){
             case 'add':
-            
-            return [...contactList,{
-                id: Date.now()+`-${action.payload.name}`,
-                ...action.payload
-            }]
+                console.log("Adding....",{
+                    id: Date.now()+`-${action.payload.name}`,
+                    ...action.payload
+                })
+                let newList= [...contactList,{
+                    id: Date.now()+`-${action.payload.name}`,
+                    ...action.payload
+                }]
+                
+                return newList
             case  'edit':
                 let list=[...contactList]
                 list.splice(contactList.indexOf(action.payload.oldValue),1,action.payload.newValue)
+                setEditContact(intial)
                 return list
         
             case 'delete':
@@ -33,39 +43,44 @@ const ContactList = () => {
 
     //state for display
     const [contactList,dispatch]=useReducer(reducerFunc,contact_list_data)
-    const addContactDispatcher=(contact)=>{
-        dispatch({type:'add',payload:contact})
-        setEditContact(intial)
-    }
-    const editContactDispatcher=(oldValue,newValue)=>{
-        dispatch( {type:'edit',payload:{oldValue,newValue} })
-        setEditContact(intial)
-    }
-    const deleteContactDispatcher=(id)=>{
-        dispatch({type:'delete',payload:id})
-    }
 
-    //state for form
-    let intial=null //intial state of form
-    const [editContact,setEditContact]=useState(intial)
+   
+   
   return (
     <>  <div className={`container ${styles['contacts-container']}`} >
             
 
         {   
-            contactList.map((contact,index)=>{
-                return <>
-
-                    
+            contactList.map((contact)=>{
+                return<> 
+                    <div key={contact.id} className='row offest-2'>
+                        <div className={`col-8 ${styles["contact-content"]}`}>
+                            <div className='container'>
+                                <div className='row'>
+                                    <div className='col'>{contact.name}</div>
+                                    <div className='col offset-1'><small>{contact.phoneNo}</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    <div className={`col-4 ${styles["acion-panel"]}`}>
+                        <div className='container'>
+                            <div className='row'>
+                            <div className='col' onClick={()=>setEditContact(contact)}><button>Edit</button></div>
+                            <div className='col'><button onClick={()=>dispatch({type:'delete',payload:contact.id})}>Delete</button></div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
                 </>
                 
             })
         }
            
         </div>
-         <button  onClick={editContact  ? ()=>setEditContact(intial)  : undefined  }  >{editContact? 'CANCEL EDIT' : 'EDIT' }</button>
-        { console.log("edit contact value is: ",editContact) }
-        {editContact ? < DualFunctionForm  editContact={editContact} onDispatch={  editContactDispatcher } />: <DualFunctionForm onDispatch={  addContactDispatcher }/> }
+        <div className='container'> <div className='row offset-3'><div className='col-6'><button style={{width:'145%'}}  onClick={editContact  ? ()=>setEditContact(intial)  : undefined  }  >{editContact? 'CANCEL EDIT' : 'EDIT' }</button>
+        </div></div></div>
+         < DualFunctionForm  editContact={editContact} onDispatch={ dispatch } /> 
     </>
   )
 }

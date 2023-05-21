@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import delayWithPromise from '../../utility/promise'
+import styles from './form_styles.module.css'
 const DualFunctionForm = ({onDispatch,editContact}) => {
 
     
@@ -27,18 +28,18 @@ const DualFunctionForm = ({onDispatch,editContact}) => {
    
     {/**This formEdit value can be sent via props ,
      * along with it editedValue(user) need to be sent via props*/}
-    <form className='offset-left-4 offset-right-4'> 
-        <div className='form-row'>
-            <div className='col'>
+    <form className={` container ${styles['form-style']}`}> 
+        <div className='form-row offset-4'>
+            <div className='col-4'>
             <input  value={formField.name} name="name" onChange={onFieldChange} placeholder='Name'></input>  
             </div>
         </div>
-        <div className='form-row'>
-            <div className='col'>
+        <div className='form-row offset-4'>
+            <div className='col-4'>
             <input  type="number" value={formField.phoneNo} name="phoneNo" onChange={onFieldChange} placeholder='Phone'></input>   
             </div>
         </div>
-        <button type='submit' onClick={handleSubmit} disabled={submitting?true:false}>{submitting?'Submitting..':(editContact?'Edit':'Add')}</button>        
+        <button className={'offset-4'} type='submit' onClick={handleSubmit} disabled={submitting?true:false}>{submitting?'Submitting..':(editContact?'Edit':'Add')}</button>        
     </form>
 
 
@@ -67,14 +68,14 @@ const DualFunctionForm = ({onDispatch,editContact}) => {
     
     if(editContact){
         //edit logic
-        onDispatch(editContact,formField)
+        onDispatch( {type:'edit',payload:{oldValue:editContact,newValue: formField} })
     //    setFromField(intialFieldState)
         // formField.name
         // formField.phoneNo
 
     }else{
          // add logic
-         onDispatch(formField)
+         onDispatch({type:'add',payload:{...formField} })
         //  setFromField(intialFieldState)
     }
    
