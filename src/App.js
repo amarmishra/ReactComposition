@@ -14,6 +14,7 @@ import {Archadion,PlayButton,DropDown,DualFunctionForm, ContactList} from './com
 //data import
 import archadionPanels from './data/archadion_panel_data'
 import SearchBar from './componenets/SearchBar/SearchBar';
+import DragDropGame from './componenets/DragAndDrop/DragDropGame';
 
 
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='/dual-function-form'element={<DualFunctionForm></DualFunctionForm>}></Route>
           <Route path='/contact-list'element={<ContactList/>}></Route>
           <Route path='/search-bar' element={<SearchBar></SearchBar>}></Route>
+          <Route path='/drag-drop' element={<DragDropGame></DragDropGame>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

@@ -14,8 +14,10 @@ let index=
 
       'Contact List with Add and Edit(single form used for CRUD)':'/contact-list',
 
-      'Search bar filter' : '/search-bar'
-
+      'Search bar filter' : '/search-bar',
+      
+      'DragAndDrop on Grid(using 2 reducers for state management)' : '/drag-drop'
+      
     }
 
 
